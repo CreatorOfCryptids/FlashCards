@@ -1,10 +1,10 @@
 import java.util.*;
+
 public class Lesson {
 	
 	String lessonName;
-	Term[] vocabList;
-	int accuracy;
-	int lessonNumber;
+	LinkedList<Term> vocabList = new LinkedList<Term>();
+	String description;
 	
 	/**
 	 * The reading constructor.
@@ -16,7 +16,13 @@ public class Lesson {
 	/**
 	 * The creation constructor.
 	 */
-	Lesson(){
-		
+	Lesson(String name, LinkedList<Term> list){
+		this.lessonName = name;
+		this.vocabList = list;
 	}
+
+	/**
+	 * The
+	 */
+
 }

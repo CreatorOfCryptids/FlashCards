@@ -97,14 +97,26 @@ class Term {
 		this.Phase = phase;
 	}
 
+	/**
+	 * The addAcceptedDef() method.
+	 * @param newDef The new acceptable definition responce.
+	 */
 	public void addAcceptedDef(String newDef){
 		AcceptedDefs.add(newDef);
 	}
 
+	/**
+	 * The addAcceptedTerm() method.
+	 * @param newTerm The new acceptable term responce.
+	 */
 	public void addAcceptedTerm(String newTerm){
 		AcceptedTerms.add(newTerm);
 	}
 
+	/**
+	 * The editAcceptedDefs() method.
+	 * Allows the user to edit an incorrect accepted deffinition entry.
+	 */
 	public void editAcceptedDefs() {
 		System.out.printf("The current definitions are:");
 		int i=1;
@@ -118,6 +130,10 @@ class Term {
 		AcceptedDefs.set(choice, scnr.nextLine());
 	}
 
+	/**
+	 * The editAcceptedTerms() method.
+	 * Allows the user to edit an incorrect accepted term entry.
+	 */
 	public void editAcceptedTerms() {
 		System.out.printf("The current accepted terms are:");
 		int i=1;
@@ -131,7 +147,21 @@ class Term {
 		AcceptedTerms.set(choice, scnr.nextLine());
 	}
 
-	public String toString(){
+	public void test(){
+		switch (phase)
+		case Phase.INTRO:
+
+		case Phase.DEF:
+			System.out.printf(term + "\nDefinition: ");
+		case Phase.TERM:
+
+	}
+
+	/**
+	 * The fileFormat() method.
+	 * Makes a string that can be printed to the file system, and read by the reading constructor.
+	 */
+	public String fileFormat(){
 		String storage = "";
 		storage += term + "*" + def + "<<*";
 		for(String ADef : AcceptedDefs){
@@ -144,6 +174,15 @@ class Term {
 		storage += ">>";
 		
 		return storage;
+	}
+
+	/**
+	 * The toString method
+	 */
+	public String toString(){
+		String output = "Term:\n" + term + "\nDefinition:\n" + def + "\n";
+
+		return output;
 	}
 }
 
