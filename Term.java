@@ -52,34 +52,32 @@ class Term {
 	 */
 	Term(String fileInput){
 		// TODO:
-		// ¡Hola mundo!!*Hello world!!*<<*Hello world!!*Hi world!!*>>*<<¡Hola mundo!!*¡Buenos días mundo!!*>
+		// ¡Hola mundo!!*Hello world!!*[null]<<*Hello world!!*Hi world!!*>>*<<¡Hola mundo!!*¡Buenos días mundo!!*>
 		
 		// Send it to the string reader for ease of reading
 		StringReader read = new StringReader(fileInput);
 
 		// Read the term
-		while (!read.isDone() && read.peek() != '*'){
-			if (read.peek() == '!')
-				read.swallow(1);
-			term += read.getChar();
-		}
-
+		term = read.readNext();
 		// Read the definition
-		while (!read.isDone() && read.peek() != '*'){
-			if (read.peek() == '!')
-				read.swallow(1);
-			def += read.getChar();
-		}
+		def = read.readNext();
 		// Read the pronunciation (check to see if null)
-		while (!read.isDone() && read.peek() != '*'){
-			if (read.peek() == '!')
-				read.swallow(1);
-			term += read.getChar();
-		}
+		if (read.peek() != '*')
+			pronunciation = read.readNext();
 		// Read the accepted definitions
-
+		if(!read.peekString(3).equals("<*")){
+			read.swallow(2);
+			while(!read.peekString(5).equals(">>*<<")){
+				AcceptedDefs.add(read.readNext());
+			}
+		}
 		// Read the accepted terms
-
+		if(!read.peekString(3).equals("<<*")){
+			read.swallow(3);
+			while(!read.peekString(2).equals(">*")){
+				AcceptedTerms.add(read.readNext());
+			}
+		}
 	}
 
 	/**
@@ -201,7 +199,7 @@ class Term {
 		for(String ATerm : AcceptedTerms){
 			storage += IO.fileCleaner(ATerm) + "*";
 		}
-		storage += ">>";
+		storage += ">>\n";
 		
 		return storage;
 	}
@@ -306,11 +304,14 @@ class Term {
 					this.swallow(1);
 				retVal += this.getChar();
 			}
+			this.swallow(1);
 			return retVal;
 		}
 	}
+	
+	private static enum Phase{INTRO, DEF, TERM};
 }
 
 
 
-enum Phase{INTRO, DEF, TERM}
+
