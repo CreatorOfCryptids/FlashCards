@@ -22,6 +22,7 @@ public class IOManagment {
 		return scnr.nextLine();
 	}
 
+	// TODO: Figure out why this isn't doing anything.
 	public static String fileCleaner(String input){
 		String retVal = input;
 		retVal.replace("!", "!!");

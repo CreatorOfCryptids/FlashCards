@@ -13,7 +13,7 @@ public class FlashCards {
 		FlashCards fc = new FlashCards();
 		//fc.languages = readFile();
 
-		System.out.println("Which language would you like to study?")
+		System.out.println("Which language would you like to study?");
 		for(int i = 0; i<fc.languages.size(); i++){
 			System.out.println("(" + (i+1) + ") " + fc.languages.get(i).toString());
 		}

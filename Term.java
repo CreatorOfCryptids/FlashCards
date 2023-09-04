@@ -8,9 +8,8 @@ class Term {
 	private LinkedList<String> AcceptedTerms = new LinkedList<String>();
 	private int[] accuracy;	// The accuracy in each phase. Updated every session.
 	private Phase Phase;	// The current phase that the flashcard it in. Updated every session.
-	private Scanner scnr = new Scanner(System.in);
 	private String pronunciation; 	// Optional storage of pronunciation
-	public IOManagment IO = new IOManagment();
+	private IOManagment IO = new IOManagment();// TODO IDK why I cant just call what I need without making a whole new object.
 	
 	/**
 	 * For testing
@@ -51,8 +50,8 @@ class Term {
 	 * @param fileInput A string containing the toString from the storage file.
 	 */
 	Term(String fileInput){
-		// TODO:
-		// ¡Hola mundo!!*Hello world!!*[null]<<*Hello world!!*Hi world!!*>>*<<¡Hola mundo!!*¡Buenos días mundo!!*>
+		// TODO: Test
+		// ¡Hola mundo!!*Hello world!!*o'la,mun'do,<<*Hello world!!*Hi world!!*>>*<<¡Hola mundo!!*¡Buenos días mundo!!*>>
 		
 		// Send it to the string reader for ease of reading
 		StringReader read = new StringReader(fileInput);
@@ -74,7 +73,7 @@ class Term {
 		// Read the accepted terms
 		if(!read.peekString(3).equals("<<*")){
 			read.swallow(3);
-			while(!read.peekString(2).equals(">*")){
+			while(!read.peekString(2).equals("*>>")){
 				AcceptedTerms.add(read.readNext());
 			}
 		}
@@ -98,9 +97,25 @@ class Term {
 		return retDef;
 	}
 
+	/**
+	 * The getPronunciation() accessor.
+	 * @return pronunciation
+	 */
 	public String getPronunciation(){
 		String retPronunciation = pronunciation;
 		return retPronunciation;
+	}
+
+	public String[] getAcceptedDefs(){
+		String[] retVal = new String[AcceptedDefs.size()];
+		AcceptedDefs.toArray(retVal);
+		return retVal;
+	}
+
+	public String[] getAcceptedTerms(){
+		String[] retVal = new String[AcceptedTerms.size()];
+		AcceptedTerms.toArray(retVal);
+		return retVal;
 	}
 
 	/**
@@ -118,6 +133,7 @@ class Term {
 	 */
 	public void setTerm(String newTerm){
 		this.term = newTerm;
+		AcceptedTerms.set(0, newTerm);
 	}
 
 	public void setPronunciation(String newPronunciation){
@@ -130,7 +146,7 @@ class Term {
 	 */
 	public void setDef(String newDef){
 		this.def = newDef;
-		AcceptedDefs.set(1, newDef);
+		AcceptedDefs.set(0, newDef);
 	}
 
 	/**
@@ -226,14 +242,14 @@ class Term {
 		* @param i How far ahead the method looks.
 		* @return The char i characters ahead of the index.
 		* Looks “i” characters ahead and returns that character; doesn’t move the index.
-		*/
+		*
 		public char peek(int i){
 			// Make sure the index is not beond the end of the string.
 			if((index+i < readMe.length()))
 				return readMe.charAt(index+i);
 			else
 				return ' ';
-		}
+		}/**/
 
 		/**
 		 * The peek() overloaded method.
@@ -292,10 +308,10 @@ class Term {
 		/**
 		 * The remainder() method.
 		 * @return The rest of the input file as a single string.
-		 */
+		 *
 		public String remainder() {
 			return readMe.substring(index);
-		}
+		}/**/
 
 		public String readNext(){
 			String retVal = "";
